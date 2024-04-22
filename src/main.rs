@@ -74,24 +74,20 @@ fn parse_file(config_line: &str, ins_fi: &mut i32) {
         None => PathBuf::from("")
     };
     let mut home_str = home_dir.into_os_string().into_string().unwrap();
-    println!("Home: {}", home_str.to_string());
     let mut split = config_line.split(':');
     let mut system_path = split.next().unwrap().to_string();
     system_path.remove(0);
     home_str.push_str(&system_path);
-    println!("File: {}", home_str.to_string());
+    println!("File system file: {}", home_str.to_string());
     let repo_path = split.next().unwrap(); 
-    println!("File: {}", repo_path);
+    println!("Repository file: {}", repo_path);
     let system_file_handle = fs::metadata(home_str.to_string());
     let repo_file_handle = fs::metadata(repo_path);
     match system_file_handle {
        Ok(m) => {
            *ins_fi += 1;
-           println!("File {} already exists!", system_path); 
        },
        Err(error) => { 
-           println!("Error: {}", error);
-           println!("File is not installed in filesystem yet!");
        }
     }
     
@@ -113,7 +109,6 @@ fn run_check(subcommand: CheckSubcommand) {
         eprintln!("Problem with creating configuration object: {err}");
         process::exit(1);
     });
-    println!("Found {} file entries in config file", config.files.len());
     let mut installed_files = 0;
     for line in config.files.iter() {
         parse_file(line, &mut installed_files);
