@@ -7,11 +7,11 @@ use std::process;
 pub struct DotccArgs {
     /// Manage configuration files 
     #[clap(subcommand)]
-    pub action: GruCommand,
+    pub action: DotccCommand,
 }
 
 #[derive(Debug, Subcommand)]
-pub enum GruCommand {
+pub enum DotccCommand {
     /// Check differences between files
     Check(CheckSubcommand),
     /// Install files in filesystem
