@@ -4,7 +4,7 @@ use crate::file_ops::parse_file;
 use std::process;
 
 #[derive(Debug, Parser)]
-pub struct GruArgs {
+pub struct DotccArgs {
     /// Manage configuration files 
     #[clap(subcommand)]
     pub action: GruCommand,
